@@ -16,7 +16,7 @@ services:
     image: ddsdeploy
     restart: always
     ports:
-      - 8080:8080
+      - 8081:8080
     environment:
        hibernate__hbm2ddl__auto: create
        javax__persistence__jdbc__driver: org.postgresql.Driver
