@@ -1,27 +1,62 @@
 # Use postgres/example user/password credentials
-version: '3.1'
+version: "3.8"
+
+#la base de datos de sonarqube se necesita ya que tiene que guardar en algun lado los valores analizados o codigos que recibe jenkins
+#duda si lo tenemos que levantar en otro contenedor o se levanta sola por atras
 
 services:
-
-  dbservice:
-    image: postgres
-    restart: always
+  sonar_db:
+    image: postgres:13
     environment:
-      POSTGRES_PASSWORD: 123
-      POSTGRES_DB: dblibros
+      POSTGRES_USER: sonar
+      POSTGRES_PASSWORD: sonar
+      POSTGRES_DB: sonar
     volumes:
-    - ./posgresdb:/var/lib/postgresql/data
+      #sonar_db:/var/lib/postgresql
+      sonar_db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks: net_jenkins
 
-  app:
-    image: ddsdeploy
-    restart: always
-    ports:
-      - 8081:8080
-    environment:
-       hibernate__hbm2ddl__auto: create
-       javax__persistence__jdbc__driver: org.postgresql.Driver
-       javax__persistence__jdbc__password: 123
-       javax__persistence__jdbc__url: jdbc:postgresql://dbservice/dblibros
-       javax__persistence__jdbc__user: postgres
+  sonarqube:
+    container_name: sonarqube_manage_by_compose
+    image: sonarqube:lts-community
     depends_on:
-     - dbservice
+      - sonar_db
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonar_db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: sonar
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+      - sonarqube_temp:/opt/sonarqube/temp
+    restart: unless-stopped
+    networks: net_jenkins
+
+  jenkins:
+    container_name: jenkins_managed_by_compose
+    image: jenkins/jenkins:lts-jdk17
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    depends_on:
+      - sonarqube
+    restart: on-failure
+    networks:
+      - net_jenkins
+
+volumes:
+  jenkins_home:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  sonarqube_temp:
+  sonar_db:
+  sonar_db_data:
