@@ -1,5 +1,5 @@
 # Use postgres/example user/password credentials
-version: "3.8"
+version: "3.3"
 
 #la base de datos de sonarqube se necesita ya que tiene que guardar en algun lado los valores analizados o codigos que recibe jenkins
 #duda si lo tenemos que levantar en otro contenedor o se levanta sola por atras
@@ -13,9 +13,10 @@ services:
       POSTGRES_DB: sonar
     volumes:
       #sonar_db:/var/lib/postgresql
-      sonar_db_data:/var/lib/postgresql/data
+      - sonar_db_data:/var/lib/postgresql/data
     restart: unless-stopped
-    networks: net_jenkins
+    networks: 
+      - net_jenkins
 
   sonarqube:
     container_name: sonarqube_manage_by_compose
@@ -35,7 +36,8 @@ services:
       - sonarqube_logs:/opt/sonarqube/logs
       - sonarqube_temp:/opt/sonarqube/temp
     restart: unless-stopped
-    networks: net_jenkins
+    networks: 
+      - net_jenkins
 
   jenkins:
     container_name: jenkins_managed_by_compose
