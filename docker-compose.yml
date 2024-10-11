@@ -15,8 +15,8 @@ services:
       #sonar_db:/var/lib/postgresql
       - sonar_db_data:/var/lib/postgresql/data
     restart: unless-stopped
-    networks: 
-      - net_jenkins
+    #networks: 
+    #  - net_jenkins
 
   sonarqube:
     container_name: sonarqube_manage_by_compose
@@ -36,8 +36,8 @@ services:
       - sonarqube_logs:/opt/sonarqube/logs
       - sonarqube_temp:/opt/sonarqube/temp
     restart: unless-stopped
-    networks: 
-      - net_jenkins
+    #networks: 
+    #  - net_jenkins
 
   jenkins:
     container_name: jenkins_managed_by_compose
@@ -50,8 +50,8 @@ services:
     depends_on:
       - sonarqube
     restart: on-failure
-    networks:
-      - net_jenkins
+    #networks:
+    #  - net_jenkins
 
 volumes:
   jenkins_home:
