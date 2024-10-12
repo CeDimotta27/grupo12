@@ -34,17 +34,17 @@ pipeline {
                 }   
             } 
         }
-        /*
+        
         stage('SonarQube Analysis') {
             steps {
-                echo "Executing Sonar Analysis"
-                def scannerHome = tool 'Sonar Scanner 6.2'
-                withSonarQubeEnv('SonarQube') {
-                    sh "mvn package sonar:sonar -Dsonar.projectKey=squ_d0357d000a0cf03c941914b2b2759ac4fb157991"
-                }
-            }
+                echo "Executing SonarQube Analysis"
+                withSonarQubeEnv('SonarQube') { 
+                    sh "mvn package sonar:sonar"
         }
-        */
+    }
+}
+
+        
         // Minikube stage pendiente
 
     } // Fin de stages
