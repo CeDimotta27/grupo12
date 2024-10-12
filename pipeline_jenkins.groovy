@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+    
     stages {
 
         stage('Git Checkout') {
@@ -15,7 +15,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building App"
-                sh 'mvn clean package'
+                sh 'mvn clean package'  
                 // clean elimina los archivos generados en compilaciones anteriores
                 // package empaqueta el código en un archivo .jar después de compilarlo
             }
@@ -29,12 +29,12 @@ pipeline {
             post {
                 // Registramos los errores de Maven
                 success {
-                    junit '*/target/surefire-reports/TEST-.xml'
-                    archiveArtifacts 'target/.jar'
-                }
+                    junit '**/target/surefire-reports/*.xml'
+                    archiveArtifacts 'target/*.jar'
+                }   
             } 
         }
-        /
+        /*
         stage('SonarQube Analysis') {
             steps {
                 echo "Executing Sonar Analysis"
