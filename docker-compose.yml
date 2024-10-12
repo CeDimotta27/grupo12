@@ -41,7 +41,7 @@ services:
 
   jenkins:
     container_name: jenkins_managed_by_compose
-    image: jenkins/jenkins:lts-jdk17
+    image:  melibugallo/grupo12:jenkins_con_maven-latest
     ports:
       - "8080:8080"
       - "50000:50000"
