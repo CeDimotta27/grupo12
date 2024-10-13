@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appx-api-deployment
+  labels:
+    app: appx-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: appx-api
+  template:
+    metadata:
+      labels:
+        app: appx-api
+    spec:
+      containers:
+      - name: appx-api-container
+        image: micaelaa45/dssdeploy:appx-api-latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: dbservice
+          value: "dbservice://192.168.134.132:27017/appx-db"
+
+apiVersion: v1
+kind: Service
+metada:
+  name: appx-api-service
+spec:
+  selector:
+    app: appx-api
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+
+
+
+ 
