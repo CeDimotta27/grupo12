@@ -25,7 +25,7 @@ spec:
 
 apiVersion: v1
 kind: Service
-metada:
+metadata:
   name: appx-api-service
 spec:
   selector:
