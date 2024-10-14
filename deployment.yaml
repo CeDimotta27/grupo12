@@ -20,8 +20,8 @@ spec:
         ports:
         - containerPort: 8080
         env:
-        - name: dbservice
-          value: "dbservice://192.168.134.132:27017/appx-db"
+        - name: postgres_URL
+          value: "dbservice://192.168.134.132:5432/appx-db"
 
 apiVersion: v1
 kind: Service
@@ -35,7 +35,3 @@ spec:
     port: 80
     targetPort: 8080
   type: LoadBalancer
-
-
-
- 
