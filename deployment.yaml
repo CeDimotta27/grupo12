@@ -22,7 +22,8 @@ spec:
         env:
         - name: postgres_URL
           value: "dbservice://dbservice:5432/dblibros"
-
+  
+---
 apiVersion: v1
 kind: Service
 metadata:

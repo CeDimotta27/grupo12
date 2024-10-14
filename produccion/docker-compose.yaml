@@ -6,12 +6,12 @@ services:
     image: postgres:latest
     container_name: postgres
     ports:
-    - "5432:5432"
+      - "5432:5432"
     environment:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: dblibros
     volumes:
-    - ./posgresdb:/var/lib/postgresql/data
+      - ./posgresdb:/var/lib/postgresql/data
     restart: always
 
   app:
@@ -25,5 +25,5 @@ services:
        javax__persistence__jdbc__url: jdbc:postgresql://dbservice/dblibros
        javax__persistence__jdbc__user: postgres
     depends_on:
-     - dbservice
+      - dbservice
     restart: always
