@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: appx-api-container
-        image: micaelaa45/dssdeploy:latest
+        image: micaelaa45/dssdeploy:appx-api-latest 
         ports:
         - containerPort: 8080
         env:
@@ -36,3 +36,4 @@ spec:
       targetPort: 8080
       nodePort: 30080
   type: NodePort
+
