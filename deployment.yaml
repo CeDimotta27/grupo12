@@ -16,12 +16,12 @@ spec:
     spec:
       containers:
       - name: appx-api-container
-        image: micaelaa45/dssdeploy:appx-api-latest 
+        image: micaelaa45/dssdeploy
         ports:
         - containerPort: 8080
         env:
         - name: postgres_URL
-          value: "postgresql://postgres:123@dbservice:5432/dblibros"
+          value: "dbservice://dbservice:5432/dblibros"
 
 apiVersion: v1
 kind: Service
@@ -34,5 +34,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 8080
-      #nodePort: 30080
-  type: LoadBalancer
+      nodePort: 30080
+  type: NodePort
