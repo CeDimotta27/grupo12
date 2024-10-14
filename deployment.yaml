@@ -21,7 +21,7 @@ spec:
         - containerPort: 8080
         env:
         - name: postgres_URL
-          value: "dbservice://192.168.134.132:5432/appx-db"
+          value: "postgresql://postgres:123@dbservice:5432/dblibros"
 
 apiVersion: v1
 kind: Service
@@ -36,4 +36,3 @@ spec:
       targetPort: 8080
       nodePort: 30080
   type: NodePort
-
