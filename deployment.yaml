@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: appx-api-container
-        image: micaelaa45/dssdeploy
+        image: dssdeploy
         ports:
         - containerPort: 8080
         env:

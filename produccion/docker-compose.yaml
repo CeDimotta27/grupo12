@@ -15,7 +15,7 @@ services:
     restart: always
 
   app:
-    image: micaelaa45/ddsdeploy
+    image: ddsdeploy
     ports:
       - "8080:8080"
     environment:
