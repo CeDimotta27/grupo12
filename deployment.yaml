@@ -30,6 +30,8 @@ spec:
       volumes:
       - name: db-storage
         emptyDir: {}
+      imagePullSecrets:
+      - name: regcred
 
 ---
 
