@@ -30,8 +30,6 @@ spec:
       volumes:
       - name: db-storage
         emptyDir: {}
-      imagePullSecrets:
-      - name: regcred
 
 ---
 
@@ -69,6 +67,8 @@ spec:
           value: "jdbc:postgresql://dbservice/dblibros"
         - name: javax__persistence__jdbc__user
           value: "postgres"
+      imagePullSecrets:
+      - name: regcred
 ---
 apiVersion: v1
 kind: Service
