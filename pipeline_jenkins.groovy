@@ -40,12 +40,62 @@ pipeline {
                 echo "Executing SonarQube Analysis"
                 withSonarQubeEnv('SonarQube') { 
                     sh "mvn package sonar:sonar"
+                }
+            }
         }
-    }
-}
 
-        
-        // Minikube stage pendiente
+        stage('Checkout remoto'){
+            agent{
+                steps{
+                    label 'minikube'
+                }
+            }
+            steps{
+                script{
+                    echo 'Cheking out SCM Jobs Project'
+                        git branch: "main"
+                        credintialId: 'GitHubID'
+                        url: 'https://github.com/CeDimotta27/grupo12.git'
+                }
+            }
+        }
+
+        stage('Docker Build'){
+            agent{
+                label 'minikube'
+            }
+            steps{
+                echo 'Building Docker Image'
+                dir("${env.WORKSPACE}/produccion"){
+                    sh 'ls -l'
+                    sh 'docker build -t appx-api:latest'
+                }
+            }
+        }
+
+        stage('Docker Push'){
+            agent{
+                label 'minikube'
+            }
+            steps{
+                echo 'Pushing Docker Image'
+                sh '''
+                docker tag appx-api:latest miacelaa45/ddsdeploy
+                docker push miacelaa45/ddsdeploy
+                '''
+            }
+        }
+
+        stage('Restart Deployment'){
+            agent{
+                label 'minikube'
+            }
+            setps{
+                sh '''
+                kubectl rollout restart deployment appx-api-deployment
+                '''
+            }
+        }
 
     } // Fin de stages
 
