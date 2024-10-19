@@ -62,7 +62,7 @@ pipeline {
             }
             steps{
                 echo 'Building Docker Image'
-                dir("${env.WORKSPACE}/produccion"){
+                dir("${env.WORKSPACE}"){
                     sh 'ls -l'
                     sh 'docker build -t appx-api:latest .'
                 }
@@ -76,8 +76,8 @@ pipeline {
             steps{
                 echo 'Pushing Docker Image'
                 sh '''
-                docker tag appx-api:latest miacelaa45/ddsdeploy
-                docker push miacelaa45/ddsdeploy
+                docker tag appx-api:latest micaelaa45/ddsdeploy
+                docker push micaelaa45/ddsdeploy
                 '''
             }
         }
