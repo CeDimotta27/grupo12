@@ -24,7 +24,7 @@ pipeline {
         stage('Unit Test') {
             steps {
                 echo "Executing unit Tests"
-                sh 'mvn compile validate test -Dmaben.test.failure.ignore=true'
+                sh 'mvn compile validate test -Dmaven.test.failure.ignore=true'
             }
             post {
                 // Registramos los errores de Maven
@@ -51,9 +51,7 @@ pipeline {
             steps{
                 script{
                     echo 'Cheking out SCM Jobs Project'
-                        git branch: "main"
-                        credintialsId: 'GitHubID'
-                        url: 'https://github.com/CeDimotta27/grupo12.git'
+                        git branch: "main", credentialsId: 'GitHubID', url: 'https://github.com/CeDimotta27/grupo12.git'
                 }
             }
         }
@@ -88,7 +86,7 @@ pipeline {
             agent{
                 label 'minikube'
             }
-            steps{
+            stps{
                 sh '''
                 kubectl rollout restart deployment appx-api-deployment
                 '''
