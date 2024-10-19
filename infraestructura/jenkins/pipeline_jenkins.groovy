@@ -46,15 +46,13 @@ pipeline {
 
         stage('Checkout remoto'){
             agent{
-                steps{
-                    label 'minikube'
-                }
+                 label 'minikube'
             }
             steps{
                 script{
                     echo 'Cheking out SCM Jobs Project'
                         git branch: "main"
-                        credintialId: 'GitHubID'
+                        credintialsId: 'GitHubID'
                         url: 'https://github.com/CeDimotta27/grupo12.git'
                 }
             }
@@ -68,7 +66,7 @@ pipeline {
                 echo 'Building Docker Image'
                 dir("${env.WORKSPACE}/produccion"){
                     sh 'ls -l'
-                    sh 'docker build -t appx-api:latest'
+                    sh 'docker build -t appx-api:latest .'
                 }
             }
         }
@@ -90,7 +88,7 @@ pipeline {
             agent{
                 label 'minikube'
             }
-            setps{
+            steps{
                 sh '''
                 kubectl rollout restart deployment appx-api-deployment
                 '''
