@@ -86,7 +86,7 @@ pipeline {
             agent{
                 label 'minikube'
             }
-            stps{
+            steps{
                 sh '''
                 kubectl rollout restart deployment appx-api-deployment
                 '''
