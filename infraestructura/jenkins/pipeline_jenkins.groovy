@@ -15,22 +15,22 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building App"
-                sh 'mvn clean package'  
+                 sh 'mvn clean package -Dmaven.test.failure.ignore=true'
                 // clean elimina los archivos generados en compilaciones anteriores
                 // package empaqueta el código en un archivo .jar después de compilarlo
+                //-Dmaven.test.failure.ignore=true ignora los test que fallan y compila igual
             }
         }
 
         stage('Unit Test') {
             steps {
                 echo "Executing unit Tests"
-                sh 'mvn compile validate test -Dmaven.test.failure.ignore=true'
+                sh 'mvn validate test'
             }
             post {
                 // Registramos los errores de Maven
                 success {
                     junit '**/target/surefire-reports/*.xml'
-                    archiveArtifacts 'target/*.jar'
                 }   
             } 
         }
