@@ -14,11 +14,11 @@ services:
 
   database:
     image: mysql:latest
+    ports:
+      - "3306:3306"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=prestashop
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
     volumes:
       - db_data:/var/lib/mysql
     restart: always
