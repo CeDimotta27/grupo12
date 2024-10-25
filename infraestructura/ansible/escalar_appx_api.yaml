@@ -1,7 +1,7 @@
-- hosts: localhost
+- hosts: minikube
   tasks:
-    - name: Escalar la appx-api en Kubernetes
+    - name: Escalar la appx-api en Minikube
       shell: |
-        kubectl scale deployment appx-api --replicas={{ replicas }}
+        kubectl scale deployment appx-api-deployment --replicas={{ replicas }}
       vars:
-        replicas: 3 
+        replicas: 3  
