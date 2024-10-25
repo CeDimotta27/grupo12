@@ -1,13 +1,4 @@
 services:
-  database:
-    image: mariadb:latest
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=prestashop
-    volumes:
-      - db_data:/var/lib/mysql
-    restart: always
-    
   prestashop:
     image: prestashop/prestashop:latest
     ports:
@@ -20,6 +11,18 @@ services:
     depends_on:
       - database
     restart: always
-    
+
+  database:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=prestashop
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+
 volumes:
   db_data:
+
