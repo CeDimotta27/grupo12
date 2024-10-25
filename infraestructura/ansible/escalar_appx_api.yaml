@@ -1,8 +1,7 @@
----
 - hosts: localhost
   tasks:
     - name: Escalar la appx-api en Kubernetes
       shell: |
         kubectl scale deployment appx-api --replicas={{ replicas }}
       vars:
-        replicas: 3  # Cambia el número según sea necesario
+        replicas: 3 
