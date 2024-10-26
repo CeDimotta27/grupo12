@@ -1,0 +1,17 @@
+- name: Cambiar precios de productos en Prestashop
+  hosts: minikube  # Actualiza esto con el nombre del host o grupo en tu inventario
+
+  tasks:
+    - name: Obtener el ID del contenedor de la base de datos de Prestashop
+      shell: docker-compose ps -q database
+      args:
+        chdir: /home/$USER/grupo12/produccion/
+      register: db_container_id
+
+    - name: Actualizar el precio de todos los productos con el nuevo precio
+      shell: |
+        docker exec -i {{ db_container_id.stdout }} mysql -uroot -proot prestashop -e "UPDATE ps_product SET price = {{ nuevo_precio }}; UPDATE ps_product_shop SET price = {{ nuevo_precio }};"
+      args:
+        chdir: /home/$USER/grupo12/produccion/
+      when: db_container_id.stdout != ""
+
