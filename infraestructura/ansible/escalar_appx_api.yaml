@@ -1,4 +1,4 @@
-- hosts: minikube
+- hosts: VMproduccion
   tasks:
     - name: Escalar la appx-api en Minikube
       shell: |
