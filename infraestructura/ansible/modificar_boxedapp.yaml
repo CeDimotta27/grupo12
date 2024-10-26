@@ -1,5 +1,5 @@
 - name: Cambiar precios de productos en Prestashop
-  hosts: minikube  # Actualiza esto con el nombre del host o grupo en tu inventario
+  hosts: VMproduccion  # Actualiza esto con el nombre del host o grupo en tu inventario
 
   tasks:
     - name: Obtener el ID del contenedor de la base de datos de Prestashop
