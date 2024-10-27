@@ -82,14 +82,26 @@ pipeline {
             }
         }
 
-        stage('Restart Deployment'){
-            agent{
+        stage('Despliegue en Minikube') {
+            agent {
                 label 'minikube'
             }
-            steps{
-                sh '''
-                kubectl rollout restart deployment appx-api-deployment
-                '''
+            steps {
+                script {
+                    echo 'Checking if deployment exists...'
+                    // Verifica si el deployment existe
+                    def deploymentExists = sh(script: 'kubectl get deployment appx-api-deployment', returnStatus: true) == 0
+        
+                    if (deploymentExists) {
+                        echo 'Deployment exists, restarting...'
+                        // Reinicia el deployment
+                        sh 'kubectl rollout restart deployment appx-api-deployment'
+                    } else {
+                        echo 'Deployment does not exist, creating...'
+                        // Aplica el archivo de configuración para crear el deployment
+                        sh 'kubectl apply -f /home/mmendoza/grupo12/produccion/deployment.yaml'
+                    }
+                }
             }
         }
 
