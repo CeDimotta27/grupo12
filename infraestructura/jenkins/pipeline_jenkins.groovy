@@ -99,7 +99,7 @@ pipeline {
                     } else {
                         echo 'Deployment does not exist, creating...'
                         // Aplica el archivo de configuración para crear el deployment
-                        sh 'kubectl apply -f /home/mmendoza/grupo12/produccion/deployment.yaml'
+                        sh 'kubectl apply -f /home/$USER/grupo12/produccion/deployment.yaml'
                     }
                 }
             }
